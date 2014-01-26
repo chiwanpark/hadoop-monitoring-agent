@@ -1,0 +1,16 @@
+RULE trace main entry
+CLASS org.apache.hadoop.mapred.JobTracker
+METHOD startTracker
+AT EXIT
+BIND jobTracker = $!;
+IF true
+DO com.chiwanpark.hadoop.monitoring.Agent.startTracker(jobTracker);
+ENDRULE
+
+RULE trace main exit
+CLASS org.apache.hadoop.mapred.JobTracker
+METHOD stopTracker
+AT EXIT
+IF true
+DO com.chiwanpark.hadoop.monitoring.Agent.stopTracker();
+ENDRULE
